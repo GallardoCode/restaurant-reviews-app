@@ -1,9 +1,6 @@
-// generated on 2019-05-20 using generator-webapp 4.0.0-5
+// generated on 2019-05-21 using generator-webapp 4.0.0-5
 const { src, dest, watch, series, parallel, lastRun } = require('gulp');
 const gulpLoadPlugins = require('gulp-load-plugins');
-const fs = require('fs');
-const mkdirp = require('mkdirp');
-const Modernizr = require('modernizr');
 const browserSync = require('browser-sync');
 const del = require('del');
 const autoprefixer = require('autoprefixer');
@@ -20,14 +17,8 @@ const isTest = process.env.NODE_ENV === 'test';
 const isDev = !isProd && !isTest;
 
 function styles() {
-  return src('app/styles/*.scss')
-    .pipe($.plumber())
+  return src('app/styles/*.css')
     .pipe($.if(!isProd, $.sourcemaps.init()))
-    .pipe($.sass.sync({
-      outputStyle: 'expanded',
-      precision: 10,
-      includePaths: ['.']
-    }).on('error', $.sass.logError))
     .pipe($.postcss([
       autoprefixer()
     ]))
@@ -46,34 +37,6 @@ function scripts() {
     .pipe(server.reload({stream: true}));
 };
 
-async function modernizr() {
-  const readConfig = () => new Promise((resolve, reject) => {
-    fs.readFile(`${__dirname}/modernizr.json`, 'utf8', (err, data) => {
-      if (err) reject(err);
-      resolve(JSON.parse(data));
-    })
-  })
-  const createDir = () => new Promise((resolve, reject) => {
-    mkdirp(`${__dirname}/.tmp/scripts`, err => {
-      if (err) reject(err);
-      resolve();
-    })
-  });
-  const generateScript = config => new Promise((resolve, reject) => {
-    Modernizr.build(config, content => {
-      fs.writeFile(`${__dirname}/.tmp/scripts/modernizr.js`, content, err => {
-        if (err) reject(err);
-        resolve(content);
-      });
-    })
-  });
-
-  const [config] = await Promise.all([
-    readConfig(),
-    createDir()
-  ]);
-  await generateScript(config);
-}
 
 const lintBase = files => {
   return src(files)
@@ -142,7 +105,7 @@ const build = series(
   clean,
   parallel(
     lint,
-    series(parallel(styles, scripts, modernizr), html),
+    series(parallel(styles, scripts), html),
     images,
     fonts,
     extras
@@ -168,9 +131,8 @@ function startAppServer() {
     '.tmp/fonts/**/*'
   ]).on('change', server.reload);
 
-  watch('app/styles/**/*.scss', styles);
+  watch('app/styles/**/*.css', styles);
   watch('app/scripts/**/*.js', scripts);
-  watch('modernizr.json', modernizr);
   watch('app/fonts/**/*', fonts);
 }
 
@@ -208,7 +170,7 @@ function startDistServer() {
 
 let serve;
 if (isDev) {
-  serve = series(clean, parallel(styles, scripts, modernizr, fonts), startAppServer);
+  serve = series(clean, parallel(styles, scripts, fonts), startAppServer);
 } else if (isTest) {
   serve = series(clean, scripts, startTestServer);
 } else if (isProd) {
