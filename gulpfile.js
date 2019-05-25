@@ -6,6 +6,10 @@ const del = require('del');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const { argv } = require('yargs');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const buffer = require('vinyl-buffer');
+const source = require('vinyl-source-stream');
 
 const $ = gulpLoadPlugins();
 const server = browserSync.create();
@@ -28,10 +32,17 @@ function styles() {
 };
 
 function scripts() {
-  return src('app/scripts/**/*.js')
+  const b = browserify({
+    entries: 'app/scripts/main.js',
+    transform: babelify,
+    debug: true
+  })
+  return b
+    .bundle()
+    .pipe(source('bundle.js'))
     .pipe($.plumber())
-    .pipe($.if(!isProd, $.sourcemaps.init()))
-    .pipe($.babel())
+    .pipe(buffer())
+    .pipe($.if(!isProd, $.sourcemaps.init({ loadMaps: true })))
     .pipe($.if(!isProd, $.sourcemaps.write('.')))
     .pipe(dest('.tmp/scripts'))
     .pipe(server.reload({stream: true}));
