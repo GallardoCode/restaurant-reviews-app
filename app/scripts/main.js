@@ -1,3 +1,5 @@
+import L from 'leaflet';
+
 let restaurants, neighborhoods, cuisines;
 var newMap;
 var markers = [];
