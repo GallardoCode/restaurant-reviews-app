@@ -37,6 +37,7 @@
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^3.0.1",
     "gulp-useref": "^3.0.0",
+    "merge-stream": "^2.0.0",
     "mocha": "^5.2.0",
     "prettier": "^1.17.1",
     "vinyl-buffer": "^1.0.1",

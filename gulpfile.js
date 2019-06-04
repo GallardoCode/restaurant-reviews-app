@@ -10,6 +10,7 @@ const browserify = require('browserify');
 const babelify = require('babelify');
 const buffer = require('vinyl-buffer');
 const source = require('vinyl-source-stream');
+const mergeStream = require('merge-stream');
 
 const $ = gulpLoadPlugins();
 const server = browserSync.create();
@@ -32,23 +33,37 @@ function styles() {
 };
 
 function scripts() {
-  const b = browserify({
+  const mainjs = browserify({
     entries: 'app/scripts/main.js',
     transform: babelify,
     debug: true,
     standalone: 'updateRestaurants'
-  });
-  return b
+  })
     .bundle()
-    .pipe(source('bundle.js'))
+    .pipe(source('mainbundle.js'))
     .pipe($.plumber())
     .pipe(buffer())
     .pipe($.if(!isProd, $.sourcemaps.init({ loadMaps: true })))
     .pipe($.if(!isProd, $.sourcemaps.write('.')))
     .pipe(dest('.tmp/scripts'))
-    .pipe(server.reload({stream: true}));
-};
+    .pipe(server.reload({ stream: true }));
 
+  const restjs = browserify({
+    entries: 'app/scripts/main.js',
+    transform: babelify,
+    debug: true
+  })
+    .bundle()
+    .pipe(source('restaurant_infobundle.js'))
+    .pipe($.plumber())
+    .pipe(buffer())
+    .pipe($.if(!isProd, $.sourcemaps.init({ loadMaps: true })))
+    .pipe($.if(!isProd, $.sourcemaps.write('.')))
+    .pipe(dest('.tmp/scripts'))
+    .pipe(server.reload({ stream: true }));
+
+  return mergeStream(mainjs, restjs);
+};
 
 const lintBase = files => {
   return src(files)
