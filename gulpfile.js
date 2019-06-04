@@ -35,8 +35,9 @@ function scripts() {
   const b = browserify({
     entries: 'app/scripts/main.js',
     transform: babelify,
-    debug: true
-  })
+    debug: true,
+    standalone: 'updateRestaurants'
+  });
   return b
     .bundle()
     .pipe(source('bundle.js'))

@@ -219,3 +219,4 @@ const addMarkersToMap = (restaurants = self.restaurants) => {
   });
 } */
 
+module.exports = updateRestaurants;
