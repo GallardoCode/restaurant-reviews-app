@@ -49,7 +49,7 @@ function scripts() {
     .pipe(server.reload({ stream: true }));
 
   const restjs = browserify({
-    entries: 'app/scripts/main.js',
+    entries: 'app/scripts/restaurant_info.js',
     transform: babelify,
     debug: true
   })
