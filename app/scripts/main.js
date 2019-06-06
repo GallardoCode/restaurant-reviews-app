@@ -176,7 +176,7 @@ const createRestaurantHTML = restaurant => {
 
   //Create restaurant-info div to speparate image and text
   const info = document.createElement('div');
-  info.className = 'retaurant-info';
+  info.className = 'restaurant-info';
 
   const name = document.createElement('h3');
   name.innerHTML = restaurant.name;

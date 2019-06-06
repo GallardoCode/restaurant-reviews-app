@@ -166,7 +166,7 @@ nav h1 a {
   margin: 0;
   width: 100%;
 }
-#restaurant-list .restaurant-info {
+#restaurants-list .restaurant-info {
   display: flex;
   flex-flow: column;
   text-align: center;
