@@ -174,22 +174,34 @@ const createRestaurantHTML = restaurant => {
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
 
-  const name = document.createElement('h1');
+  //Create restaurant-info div to speparate image and text
+  const info = document.createElement('div');
+  info.className = 'retaurant-info';
+
+  const name = document.createElement('h3');
   name.innerHTML = restaurant.name;
-  li.append(name);
+  info.append(name);
+
+  // retaurant location div to group location info
+  const location = document.createElement('div');
+  location.className = 'location-info';
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
-  li.append(neighborhood);
+  location.append(neighborhood);
 
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
-  li.append(address);
+  location.append(address);
+
+  info.append(location);
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more);
+  info.append(more);
+
+  li.append(info);
 
   return li;
 };
