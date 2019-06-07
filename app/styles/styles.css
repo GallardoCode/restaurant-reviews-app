@@ -43,6 +43,8 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 #maincontent {
   background-color: #f3f3f3;
   grid-column: span 12;
+  display: flex;
+  flex-flow: row wrap;
 }
 #footer {
   background-color: #444;
@@ -206,6 +208,8 @@ nav h1 a {
 }
 .inside #map-container {
   background: blue none repeat scroll 0 0;
+  width: 100%;
+  flex: 2 50%;
 }
 .inside #map {
   background-color: #ccc;
@@ -246,6 +250,8 @@ nav h1 a {
   border-top: 1px solid #fff;
   padding: 10px 15px 15px;
   text-align: center;
+  width: 100%;
+  flex: 2 50%;
 }
 #reviews-container {
   padding: 10px 15px 10px;
@@ -339,6 +345,27 @@ nav h1 a {
   #restaurants-list .restaurant-img {
     width: 35%;
     flex: 0 1 35%;
+  }
+/* ====================== Header ====================== */
+  #breadcrumb li {
+    font-size: 1em;
+  }
+/* ====================== Restaurant Details ====================== */
+
+  #restaurant-cuisine,
+  #restaurant-address,
+  #accordion {
+    font-size: 1.4em;
+  }
+
+  #restaurant-hours td {
+    font-size: 1.3em;
+  }
+
+/* ====================== Restaurant Reviews ====================== */
+
+  #reviews-list li p {
+    font-size: 1.3em;
   }
 }
 
