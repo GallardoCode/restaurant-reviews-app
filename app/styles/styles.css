@@ -290,6 +290,10 @@ nav h1 a {
 .active, #accordion:hover {
   background-color: #ccc;
 }
+
+#accordion-block {
+  display: none;
+}
 #restaurant-hours td {
   color: #666;
 }
