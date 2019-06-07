@@ -115,7 +115,15 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
 const fillRestaurantHoursHTML = (
   operatingHours = self.restaurant.operating_hours
 ) => {
+
+  const container = document.getElementById('restaurant-hours-container');
   const hours = document.getElementById('restaurant-hours');
+  const accordion = document.createElement('button');
+  const block = document.getElementById('accordion-block');
+  accordion.id = 'accordion';
+  accordion.textContent = 'Opening Hours';
+  container.insertBefore(accordion, container.firstChild);
+
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
@@ -129,6 +137,15 @@ const fillRestaurantHoursHTML = (
 
     hours.appendChild(row);
   }
+
+  accordion.addEventListener('click', () => {
+    accordion.classList.toggle('active');
+    if (block.style.display === 'block') {
+      block.style.display = 'none';
+    } else {
+      block.style.display = 'block';
+    }
+  });
 };
 
 /**
