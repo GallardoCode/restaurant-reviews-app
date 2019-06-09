@@ -210,6 +210,11 @@ nav h1 a {
   background: blue none repeat scroll 0 0;
   width: 100%;
 }
+
+.inside #maincontent > * {
+  box-sizing: border-box;
+}
+
 .inside #map {
   background-color: #ccc;
 }
@@ -416,8 +421,24 @@ nav h1 a {
   .restaurant-info a {
     align-self: flex-start;
   }
-}
 
+/* ====================== Restaurant Details ====================== */
+  .inside #maincontent {
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+
+  .inside #restaurant-container {
+    flex: 1;
+    max-width: 400px;
+  }
+
+  .inside #reviews-container {
+    flex: 2;
+    max-width: 800px;
+  }
+
+}
 /* Large only */
 @media screen and (min-width: 64em) and (max-width: 74.9375em) {
 
