@@ -438,6 +438,11 @@ nav h1 a {
     flex: 2;
     max-width: 800px;
     position: relative;
+    overflow-y: auto;
+  }
+
+  .inside #reviews-container ul {
+    position: absolute;
   }
 
   #restaurant-container, #reviews-container {
