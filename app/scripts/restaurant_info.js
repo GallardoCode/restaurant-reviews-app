@@ -118,9 +118,10 @@ const fillRestaurantHoursHTML = (
 
   const container = document.getElementById('restaurant-hours-container');
   const hours = document.getElementById('restaurant-hours');
-  const accordion = document.createElement('button');
+  const accordion = document.createElement('a');
   const block = document.getElementById('accordion-block');
   accordion.id = 'accordion';
+  accordion.href = '#accordion-block';
   accordion.textContent = 'Opening Hours';
   container.insertBefore(accordion, container.firstChild);
 
@@ -137,14 +138,11 @@ const fillRestaurantHoursHTML = (
 
     hours.appendChild(row);
   }
-
+  block.classList.add('visuallyHidden');
+  block.tabIndex = -1;
   accordion.addEventListener('click', () => {
     accordion.classList.toggle('active');
-    if (block.style.display === 'block') {
-      block.style.display = 'none';
-    } else {
-      block.style.display = 'block';
-    }
+    block.classList.toggle('show');
   });
 };
 
