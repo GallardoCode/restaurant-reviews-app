@@ -1,10 +1,15 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-use-before-define */
 import L from 'leaflet';
-let restaurant;
-window.newMap;
+import DBHelper from './dbhelper';
+
+// let restaurant;
+window.newMap = '';
 
 /**
  * Initialize map as soon as the page is loaded.
  */
+// eslint-disable-next-line no-unused-vars
 document.addEventListener('DOMContentLoaded', event => {
   initMap();
 });
@@ -26,7 +31,8 @@ const initMap = () => {
       L.tileLayer(
         'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}',
         {
-          mapboxToken: 'pk.eyJ1IjoiZXJyb3IyazIiLCJhIjoiY2psZzQyZXN0MTBhdjNxcDcybnVqcnB2ZiJ9.62PGIJC2WLY0QmaS1oWoqQ',
+          mapboxToken:
+            'pk.eyJ1IjoiZXJyb3IyazIiLCJhIjoiY2psZzQyZXN0MTBhdjNxcDcybnVqcnB2ZiJ9.62PGIJC2WLY0QmaS1oWoqQ',
           maxZoom: 18,
           attribution:
             'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
@@ -34,7 +40,7 @@ const initMap = () => {
             'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           id: 'mapbox.streets'
         }
-      ).addTo(newMap);
+      ).addTo(window.newMap);
       fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
     }
@@ -69,7 +75,7 @@ const fetchRestaurantFromURL = callback => {
   const id = getParameterByName('id');
   if (!id) {
     // no id found in URL
-    error = 'No restaurant id in URL';
+    const error = 'No restaurant id in URL';
     callback(error, null);
   } else {
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
@@ -115,7 +121,6 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
 const fillRestaurantHoursHTML = (
   operatingHours = self.restaurant.operating_hours
 ) => {
-
   const container = document.getElementById('restaurant-hours-container');
   const hours = document.getElementById('restaurant-hours');
   const accordion = document.createElement('a');
@@ -125,18 +130,21 @@ const fillRestaurantHoursHTML = (
   accordion.textContent = 'Opening Hours';
   container.insertBefore(accordion, container.firstChild);
 
-  for (let key in operatingHours) {
-    const row = document.createElement('tr');
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key in operatingHours) {
+    if (Object.prototype.hasOwnProperty.call(operatingHours, key)) {
+      const row = document.createElement('tr');
 
-    const day = document.createElement('td');
-    day.innerHTML = key;
-    row.appendChild(day);
+      const day = document.createElement('td');
+      day.innerHTML = key;
+      row.appendChild(day);
 
-    const time = document.createElement('td');
-    time.innerHTML = operatingHours[key];
-    row.appendChild(time);
+      const time = document.createElement('td');
+      time.innerHTML = operatingHours[key];
+      row.appendChild(time);
 
-    hours.appendChild(row);
+      hours.appendChild(row);
+    }
   }
   block.classList.add('visuallyHidden');
   block.tabIndex = -1;
@@ -206,10 +214,12 @@ const fillBreadcrumb = (restaurant = self.restaurant) => {
  * Get a parameter by name from page URL.
  */
 const getParameterByName = (name, url) => {
+  // eslint-disable-next-line no-param-reassign
   if (!url) url = window.location.href;
-  name = name.replace(/[\[\]]/g, '\\$&');
-  const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`),
-    results = regex.exec(url);
+  // eslint-disable-next-line no-useless-escape
+  const cleanName = name.replace(/[\[\]]/g, '\\$&');
+  const regex = new RegExp(`[?&]${cleanName}(=([^&#]*)|&|#|$)`);
+  const results = regex.exec(url);
   if (!results) return null;
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
