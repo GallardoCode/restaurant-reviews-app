@@ -1,12 +1,18 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-use-before-define */
 import L from 'leaflet';
+import DBHelper from './dbhelper';
 
-let restaurants, neighborhoods, cuisines;
+// let restaurants;
+// let neighborhoods;
+// let cuisines;
 window.newMap = '';
 window.markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
+// eslint-disable-next-line no-unused-vars
 document.addEventListener('DOMContentLoaded', event => {
   initMap(); // added
   fetchNeighborhoods();
@@ -82,7 +88,8 @@ const initMap = () => {
   L.tileLayer(
     'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}',
     {
-      mapboxToken: 'pk.eyJ1IjoiZXJyb3IyazIiLCJhIjoiY2psZzQyZXN0MTBhdjNxcDcybnVqcnB2ZiJ9.62PGIJC2WLY0QmaS1oWoqQ',
+      mapboxToken:
+        'pk.eyJ1IjoiZXJyb3IyazIiLCJhIjoiY2psZzQyZXN0MTBhdjNxcDcybnVqcnB2ZiJ9.62PGIJC2WLY0QmaS1oWoqQ',
       maxZoom: 18,
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
@@ -174,7 +181,7 @@ const createRestaurantHTML = restaurant => {
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
 
-  //Create restaurant-info div to speparate image and text
+  // Create restaurant-info div to speparate image and text
   const info = document.createElement('div');
   info.className = 'restaurant-info';
 
