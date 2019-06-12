@@ -5,11 +5,13 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- Normalize.css for better cross-browser consistency -->
+  <!-- build:css styles/vendor.css -->
   <link rel="stylesheet" href="/node_modules/normalize.css/normalize.css" />
-  <!-- Main CSS file -->
-  <link rel="stylesheet" href="/styles/styles.css"/>
   <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css"/>
+  <!-- endbuild -->
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/styles.css">
+  <!-- endbuild -->
   <title>Restaurant Info</title>
 </head>
 
@@ -67,9 +69,11 @@
   <!-- End footer -->
   <!-- Beginning scripts -->
   <!-- Database helpers -->
-  <script type="text/javascript" src="scripts/dbhelper.js"></script>
+  <!-- <script type="text/javascript" src="scripts/dbhelper.js"></script> -->
   <!-- Main javascript file -->
+  <!-- build:js scripts/restaurant_info.js -->
   <script type="text/javascript" src="scripts/restaurant_infobundle.js"></script>
+  <!-- endbuild -->
   <!-- Google Maps -->
  <!--  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_tKbW6A5pQ-eupxI56myUnHLqYCzOjKo&libraries=places&callback=initMap"></script> -->
   <!-- End scripts -->

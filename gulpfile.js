@@ -110,6 +110,16 @@ function fonts() {
     .pipe($.if(!isProd, dest('.tmp/fonts'), dest('dist/fonts')));
 };
 
+function json() {
+  return src('app/data/**/*.json')
+    .pipe(dest('dist/data'));
+};
+
+function leaflet() {
+  return src('node_modules/leaflet/dist/images/**/*', {base: 'node_modules/leaflet/dist/'})
+    .pipe(dest('dist/styles'));
+};
+
 function extras() {
   return src([
     'app/*',
@@ -135,7 +145,9 @@ const build = series(
     series(parallel(styles, scripts), html),
     images,
     fonts,
-    extras
+    extras,
+    leaflet,
+    json
   ),
   measureSize
 );
