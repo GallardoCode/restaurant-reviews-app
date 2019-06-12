@@ -17,7 +17,7 @@
   height: auto;
   margin: 0;
   overflow: visible;
-  position: relative;
+  position: static;
   width: auto;
 }
 
@@ -300,6 +300,11 @@ nav h1 a {
 #reviews-list li p {
   margin: 0 0 10px;
 }
+#restaurant-hours-container {
+  display: flex;
+  flex-flow: column;
+}
+
 #restaurant-hours{
   width: 100%;
 }
