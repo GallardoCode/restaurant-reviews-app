@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /**
  * Common database helper functions.
  */
@@ -42,7 +43,7 @@ class DBHelper {
       if (error) {
         callback(error, null);
       } else {
-        const restaurant = restaurants.find(r => r.id === id);
+        const restaurant = restaurants.find(r => r.id == id);
         if (restaurant) {
           // Got the restaurant
           callback(null, restaurant);
@@ -64,7 +65,7 @@ class DBHelper {
         callback(error, null);
       } else {
         // Filter restaurants to have only given cuisine type
-        const results = restaurants.filter(r => r.cuisine_type === cuisine);
+        const results = restaurants.filter(r => r.cuisine_type == cuisine);
         callback(null, results);
       }
     });
@@ -80,9 +81,7 @@ class DBHelper {
         callback(error, null);
       } else {
         // Filter restaurants to have only given neighborhood
-        const results = restaurants.filter(
-          r => r.neighborhood === neighborhood
-        );
+        const results = restaurants.filter(r => r.neighborhood == neighborhood);
         callback(null, results);
       }
     });
@@ -102,13 +101,13 @@ class DBHelper {
         callback(error, null);
       } else {
         let results = restaurants;
-        if (cuisine !== 'all') {
+        if (cuisine != 'all') {
           // filter by cuisine
-          results = results.filter(r => r.cuisine_type === cuisine);
+          results = results.filter(r => r.cuisine_type == cuisine);
         }
-        if (neighborhood !== 'all') {
+        if (neighborhood != 'all') {
           // filter by neighborhood
-          results = results.filter(r => r.neighborhood === neighborhood);
+          results = results.filter(r => r.neighborhood == neighborhood);
         }
         callback(null, results);
       }
@@ -130,7 +129,7 @@ class DBHelper {
         );
         // Remove duplicates from neighborhoods
         const uniqueNeighborhoods = neighborhoods.filter(
-          (v, i) => neighborhoods.indexOf(v) === i
+          (v, i) => neighborhoods.indexOf(v) == i
         );
         callback(null, uniqueNeighborhoods);
       }
@@ -150,7 +149,7 @@ class DBHelper {
         const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type);
         // Remove duplicates from cuisines
         const uniqueCuisines = cuisines.filter(
-          (v, i) => cuisines.indexOf(v) === i
+          (v, i) => cuisines.indexOf(v) == i
         );
         callback(null, uniqueCuisines);
       }
@@ -179,7 +178,7 @@ class DBHelper {
     // https://leafletjs.com/reference-1.3.0.html#marker
     /* eslint-disable new-cap */
     // eslint-disable-next-line no-undef
-    const Marker = new L.marker(
+    const marker = new L.marker(
       /* eslint-disable new-cap */
       [restaurant.latlng.lat, restaurant.latlng.lng],
       {
@@ -188,8 +187,8 @@ class DBHelper {
         url: DBHelper.urlForRestaurant(restaurant)
       }
     );
-    Marker.addTo(window.newMap);
-    return Marker;
+    marker.addTo(newMap);
+    return marker;
   }
   /* static mapMarkerForRestaurant(restaurant, map) {
     const marker = new google.maps.Marker({
