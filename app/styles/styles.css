@@ -17,7 +17,7 @@
   height: auto;
   margin: 0;
   overflow: visible;
-  position: static;
+  position: relative;
   width: auto;
 }
 
