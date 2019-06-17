@@ -1,3 +1,4 @@
+const swVer = 'restaurant-static-v1';
 const urlsToCache = [
   '/',
   '/styles/vendor.css',
@@ -19,13 +20,29 @@ const urlsToCache = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches
-      .open('restaurant-static-v1')
+      .open(swVer)
       .then(cache => {
         return cache.addAll(urlsToCache);
       })
       .catch(error => {
         console.log(`caches error is ${error}`);
       })
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cachesNames => {
+      return Promise.all(
+        cachesNames
+          .filter(cacheName => {
+            return cacheName.startsWith('restaurant-') && cacheName != swVer;
+          })
+          .map(cacheName => {
+            return caches.delete(cacheName);
+          })
+      );
+    })
   );
 });
 
