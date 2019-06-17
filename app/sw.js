@@ -22,6 +22,7 @@ self.addEventListener('install', event => {
     caches
       .open(swVer)
       .then(cache => {
+        // cache assets in array
         return cache.addAll(urlsToCache);
       })
       .catch(error => {
@@ -36,9 +37,11 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cachesNames
           .filter(cacheName => {
+            // filter cache names beginning with restaurant and but not the current cache version
             return cacheName.startsWith('restaurant-') && cacheName != swVer;
           })
           .map(cacheName => {
+            // delete cache
             return caches.delete(cacheName);
           })
       );
@@ -49,6 +52,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
+      // resopond with cache else regular request.
       if (response) return response;
       return fetch(event.request);
     })
