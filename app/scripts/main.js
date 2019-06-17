@@ -14,10 +14,24 @@ window.markers = [];
  */
 // eslint-disable-next-line no-unused-vars
 document.addEventListener('DOMContentLoaded', event => {
+  registerServiceWorker();
   initMap(); // added
   fetchNeighborhoods();
   fetchCuisines();
 });
+
+const registerServiceWorker = () => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('sw.js')
+      .then(registration => {
+        console.log('Registration successful, scope is:', registration.scope);
+      })
+      .catch(error => {
+        console.log('Service worker registration failed, error:', error);
+      });
+  }
+};
 
 /**
  * Fetch all neighborhoods and set their HTML.
