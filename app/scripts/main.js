@@ -154,6 +154,21 @@ const updateRestaurants = () => {
       }
     }
   );
+
+  nSelect.addEventListener('click', function() {
+    if (this.getAttribute('aria-expanded') === 'false') {
+      this.setAttribute('aria-expanded', 'true');
+    } else {
+      this.setAttribute("aria-expanded", "false");
+    }
+  });
+  cSelect.addEventListener('click', function () {
+    if (this.getAttribute('aria-expanded') === 'false') {
+      this.setAttribute('aria-expanded', 'true');
+    } else {
+      this.setAttribute("aria-expanded", "false");
+    }
+  });
 };
 
 /**
@@ -222,6 +237,7 @@ const createRestaurantHTML = restaurant => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
+  more.tabIndex = 3;
   info.append(more);
 
   li.append(info);
