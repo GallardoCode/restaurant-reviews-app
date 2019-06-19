@@ -129,6 +129,9 @@ const fillRestaurantHoursHTML = (
   accordion.id = 'accordion';
   accordion.href = '#accordion-block';
   accordion.textContent = 'Opening Hours';
+  accordion.setAttribute('aria-expanded', 'false');
+  accordion.setAttribute('aria-controls', 'accordion-block');
+  accordion.tabIndex = 3;
   container.insertBefore(accordion, container.firstChild);
 
   // eslint-disable-next-line no-restricted-syntax
@@ -149,9 +152,16 @@ const fillRestaurantHoursHTML = (
   }
   block.classList.add('visuallyHidden');
   block.tabIndex = -1;
+  block.setAttribute('role', 'region');
+  block.setAttribute('aria-labelledby', 'accordion')
   accordion.addEventListener('click', () => {
     accordion.classList.toggle('active');
     block.classList.toggle('show');
+    if (accordion.getAttribute('aria-expanded') === 'false') {
+      accordion.setAttribute('aria-expanded', 'true');
+    } else {
+      accordion.setAttribute('aria-expanded', 'false');
+    }
   });
 };
 
